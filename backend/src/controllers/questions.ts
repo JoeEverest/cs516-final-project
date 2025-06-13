@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { v4 as uuidv4 } from "uuid";
 import { dynamoDB } from "../../dynamoClient";
+import { topics } from "../data/topics";
 
 export const createQuestion = async (req: Request, res: Response) => {
   const { topicId, question, answers, correctAnswer } = req.body;
@@ -56,5 +57,25 @@ export const getQuestions = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching questions:", error);
     res.status(500).json({ error: "Failed to fetch questions" });
+  }
+};
+
+export const populateData = async (req: Request, res: Response) => {
+  for (const topic of topics) {
+    const params: any = {
+      TableName: "Topic",
+      Item: {
+        id: { S: uuidv4() },
+        name: { S: topic },
+      },
+    };
+
+    try {
+      await dynamoDB.send(new PutItemCommand(params));
+      res.status(200).json({ message: "Saved topic to DynamoDB" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "DynamoDB write failed" });
+    }
   }
 };
