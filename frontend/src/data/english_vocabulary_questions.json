@@ -1,0 +1,120 @@
+[
+    {
+        "id": "evq1",
+        "topicId": "english_vocabulary",
+        "question": "What is a synonym for 'happy'?",
+        "answer": [
+            "Joyful",
+            "Sad",
+            "Angry",
+            "Tired"
+        ],
+        "correctAnswer": "Joyful"
+    },
+    {
+        "id": "evq2",
+        "topicId": "english_vocabulary",
+        "question": "What is an antonym for 'brave'?",
+        "answer": [
+            "Courageous",
+            "Fearful",
+            "Strong",
+            "Bold"
+        ],
+        "correctAnswer": "Fearful"
+    },
+    {
+        "id": "evq3",
+        "topicId": "english_vocabulary",
+        "question": "Which word means 'a place where books are kept'?",
+        "answer": [
+            "Bakery",
+            "Library",
+            "Pharmacy",
+            "Butchery"
+        ],
+        "correctAnswer": "Library"
+    },
+    {
+        "id": "evq4",
+        "topicId": "english_vocabulary",
+        "question": "What does 'ubiquitous' mean?",
+        "answer": [
+            "Rare",
+            "Common",
+            "Present everywhere",
+            "Hidden"
+        ],
+        "correctAnswer": "Present everywhere"
+    },
+    {
+        "id": "evq5",
+        "topicId": "english_vocabulary",
+        "question": "Choose the correct spelling: 'accomodate' or 'accommodate'?",
+        "answer": [
+            "Accomodate",
+            "Accommodate"
+        ],
+        "correctAnswer": "Accommodate"
+    },
+    {
+        "id": "evq6",
+        "topicId": "english_vocabulary",
+        "question": "What is the plural of 'mouse'?",
+        "answer": [
+            "Mouses",
+            "Mice",
+            "Mouse",
+            "Mooses"
+        ],
+        "correctAnswer": "Mice"
+    },
+    {
+        "id": "evq7",
+        "topicId": "english_vocabulary",
+        "question": "Which of these is a type of fruit?",
+        "answer": [
+            "Carrot",
+            "Broccoli",
+            "Apple",
+            "Potato"
+        ],
+        "correctAnswer": "Apple"
+    },
+    {
+        "id": "evq8",
+        "topicId": "english_vocabulary",
+        "question": "What is the past tense of 'go'?",
+        "answer": [
+            "Goed",
+            "Gone",
+            "Went",
+            "Going"
+        ],
+        "correctAnswer": "Went"
+    },
+    {
+        "id": "evq9",
+        "topicId": "english_vocabulary",
+        "question": "A person who writes books is called an ___.",
+        "answer": [
+            "Actor",
+            "Author",
+            "Artist",
+            "Architect"
+        ],
+        "correctAnswer": "Author"
+    },
+    {
+        "id": "evq10",
+        "topicId": "english_vocabulary",
+        "question": "What does 'ephemeral' mean?",
+        "answer": [
+            "Long-lasting",
+            "Short-lived",
+            "Permanent",
+            "Eternal"
+        ],
+        "correctAnswer": "Short-lived"
+    }
+]

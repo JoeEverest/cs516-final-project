@@ -1,0 +1,122 @@
+[
+    {
+        "id": "geoq1",
+        "topicId": "geography",
+        "question": "What is the capital of France?",
+        "answer": [
+            "London",
+            "Berlin",
+            "Paris",
+            "Madrid"
+        ],
+        "correctAnswer": "Paris"
+    },
+    {
+        "id": "geoq2",
+        "topicId": "geography",
+        "question": "Which is the longest river in the world?",
+        "answer": [
+            "Amazon River",
+            "Nile River",
+            "Yangtze River",
+            "Mississippi River"
+        ],
+        "correctAnswer": "Nile River"
+    },
+    {
+        "id": "geoq3",
+        "topicId": "geography",
+        "question": "What is the largest desert in the world?",
+        "answer": [
+            "Sahara Desert",
+            "Arabian Desert",
+            "Gobi Desert",
+            "Antarctic Polar Desert"
+        ],
+        "correctAnswer": "Antarctic Polar Desert"
+    },
+    {
+        "id": "geoq4",
+        "topicId": "geography",
+        "question": "Which country has the largest population?",
+        "answer": [
+            "India",
+            "USA",
+            "China",
+            "Indonesia"
+        ],
+        "correctAnswer": "India"
+    },
+    {
+        "id": "geoq5",
+        "topicId": "geography",
+        "question": "What is the highest mountain in the world?",
+        "answer": [
+            "K2",
+            "Mount Everest",
+            "Kangchenjunga",
+            "Lhotse"
+        ],
+        "correctAnswer": "Mount Everest"
+    },
+    {
+        "id": "geoq6",
+        "topicId": "geography",
+        "question": "In which continent is Brazil located?",
+        "answer": [
+            "Asia",
+            "Africa",
+            "South America",
+            "Europe"
+        ],
+        "correctAnswer": "South America"
+    },
+    {
+        "id": "geoq7",
+        "topicId": "geography",
+        "question": "What is the capital of Japan?",
+        "answer": [
+            "Seoul",
+            "Beijing",
+            "Tokyo",
+            "Bangkok"
+        ],
+        "correctAnswer": "Tokyo"
+    },
+    {
+        "id": "geoq8",
+        "topicId": "geography",
+        "question": "Which ocean is the largest?",
+        "answer": [
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Arctic Ocean",
+            "Pacific Ocean"
+        ],
+        "correctAnswer": "Pacific Ocean"
+    },
+    {
+        "id": "geoq9",
+        "topicId": "geography",
+        "question": "What is the smallest continent by land area?",
+        "answer": [
+            "Europe",
+            "Australia",
+            "South America",
+            "Antarctica"
+        ],
+        "correctAnswer": "Australia"
+    },
+    {
+        "id": "geoq10",
+        "topicId": "geography",
+        "question": "Which country is known as the Land of the Rising Sun?",
+        "answer": [
+            "China",
+            "South Korea",
+            "Japan",
+            "Thailand"
+        ],
+        "correctAnswer": "Japan"
+    }
+]

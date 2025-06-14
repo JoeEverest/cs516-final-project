@@ -1,0 +1,122 @@
+[
+    {
+        "id": "scq1",
+        "topicId": "science",
+        "question": "What is H2O commonly known as?",
+        "answer": [
+            "Salt",
+            "Sugar",
+            "Water",
+            "Oxygen"
+        ],
+        "correctAnswer": "Water"
+    },
+    {
+        "id": "scq2",
+        "topicId": "science",
+        "question": "What planet is known as the Red Planet?",
+        "answer": [
+            "Earth",
+            "Mars",
+            "Jupiter",
+            "Venus"
+        ],
+        "correctAnswer": "Mars"
+    },
+    {
+        "id": "scq3",
+        "topicId": "science",
+        "question": "What force pulls objects towards the Earth?",
+        "answer": [
+            "Magnetism",
+            "Friction",
+            "Gravity",
+            "Tension"
+        ],
+        "correctAnswer": "Gravity"
+    },
+    {
+        "id": "scq4",
+        "topicId": "science",
+        "question": "What is the chemical symbol for Gold?",
+        "answer": [
+            "Ag",
+            "Au",
+            "Gd",
+            "Go"
+        ],
+        "correctAnswer": "Au"
+    },
+    {
+        "id": "scq5",
+        "topicId": "science",
+        "question": "How many bones are in the adult human body?",
+        "answer": [
+            "206",
+            "100",
+            "300",
+            "256"
+        ],
+        "correctAnswer": "206"
+    },
+    {
+        "id": "scq6",
+        "topicId": "science",
+        "question": "What is the process by which plants make their own food?",
+        "answer": [
+            "Respiration",
+            "Photosynthesis",
+            "Digestion",
+            "Fermentation"
+        ],
+        "correctAnswer": "Photosynthesis"
+    },
+    {
+        "id": "scq7",
+        "topicId": "science",
+        "question": "What is the largest organ in the human body?",
+        "answer": [
+            "Heart",
+            "Liver",
+            "Brain",
+            "Skin"
+        ],
+        "correctAnswer": "Skin"
+    },
+    {
+        "id": "scq8",
+        "topicId": "science",
+        "question": "Which gas do humans need to breathe to live?",
+        "answer": [
+            "Carbon Dioxide",
+            "Nitrogen",
+            "Oxygen",
+            "Hydrogen"
+        ],
+        "correctAnswer": "Oxygen"
+    },
+    {
+        "id": "scq9",
+        "topicId": "science",
+        "question": "What is the center of an atom called?",
+        "answer": [
+            "Electron",
+            "Proton",
+            "Neutron",
+            "Nucleus"
+        ],
+        "correctAnswer": "Nucleus"
+    },
+    {
+        "id": "scq10",
+        "topicId": "science",
+        "question": "What type of star is the Sun?",
+        "answer": [
+            "Red Giant",
+            "White Dwarf",
+            "Neutron Star",
+            "Yellow Dwarf"
+        ],
+        "correctAnswer": "Yellow Dwarf"
+    }
+]
