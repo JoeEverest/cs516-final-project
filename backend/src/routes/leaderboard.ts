@@ -1,10 +1,7 @@
 import { Router } from "express";
+import { createLeaderboard, getLeaderboard } from "../controllers/leaderboard";
 
 export const leaderBoardRoutes = Router();
 
-leaderBoardRoutes.get("/", (req, res) => {
-  res.json({
-    success: true,
-    data: [],
-  });
-});
+leaderBoardRoutes.post("/", createLeaderboard);
+leaderBoardRoutes.get("/", getLeaderboard);
