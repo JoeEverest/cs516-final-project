@@ -5,7 +5,13 @@ import { dynamoDB } from "../../dynamoClient";
 export const getTopics = async (req: Request, res: Response) => {
   try {
     const params = { TableName: "Topic" };
-    const topics: any = await dynamoDB.send(new ScanCommand(params));
+    const result: any = await dynamoDB.send(new ScanCommand(params));
+    const topics =
+      result.Items?.map((item: any) => ({
+        id: item.id.S,
+        name: item.name.S,
+      })) || [];
+
     res.status(200).json({ topics });
   } catch (error) {
     console.error("Error fetching topics:", error);

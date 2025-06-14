@@ -37,7 +37,6 @@ export const getQuestions = async (req: Request, res: Response) => {
   try {
     const params = {
       TableName: "Question",
-      Limit: 5,
       FilterExpression: "topicId = :topicIdVal",
       ExpressionAttributeValues: {
         ":topicIdVal": { S: topicId },
