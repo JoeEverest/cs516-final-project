@@ -1,11 +1,6 @@
 import { Router } from "express";
+import { getTopics } from "../controllers/topics";
 
 export const topicRoutes = Router();
 
-topicRoutes.get("/", (req, res) => {
-  res.json({
-    success: true,
-    data: [],
-    count: 0,
-  });
-});
+topicRoutes.get("/", getTopics);
