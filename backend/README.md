@@ -25,7 +25,7 @@ backend/
 ## Local Development
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - npm
 
 ### Setup
@@ -51,50 +51,48 @@ The server will start on `http://localhost:3000`
 
 ## API Endpoints
 
-### GET /topics
-Returns all available quiz topics.
+### GET /questions
+eg: https://s2mso010w4.execute-api.us-east-1.amazonaws.com/dev/questions/:topicId
+topicId: 9f4cdfed-f317-4986-bbf7-11b3adbb271e
+Returns all available questions of that topic.
 
 **Response:**
 ```json
 {
-  "success": true,
-  "data": [
-    {
-      "id": "1",
-      "name": "JavaScript Fundamentals",
-      "description": "Basic JavaScript concepts and syntax",
-      "questionCount": 10,
-      "difficulty": "beginner",
-      "createdAt": "2024-01-01T00:00:00Z"
-    }
-  ],
-  "count": 1
+    "questions": [
+       {
+            "id": "3baef9ff-9b05-47c6-ac6b-b2028f1d784a",
+            "topicId": "9f4cdfed-f317-4986-bbf7-11b3adbb271e",
+            "question": "How many holes are there in a standard round of golf?",
+            "answers": [
+                "18",
+                "9",
+                "12",
+                "16"
+            ],
+            "correctAnswer": "18"
+        },
+    ]
 }
 ```
 
-### GET /topics/:id
-Returns questions for a specific topic.
+### GET /topics
+Returns all available quiz topics.
+eg: https://s2mso010w4.execute-api.us-east-1.amazonaws.com/dev/topics
 
 **Response:**
 ```json
 {
-  "success": true,
-  "data": {
-    "topicId": "1",
-    "questions": [
-      {
-        "id": "1",
-        "topicId": "1",
-        "question": "What is the difference between let and var in JavaScript?",
-        "options": ["No difference", "let has block scope, var has function scope", "..."],
-        "correctAnswer": 1,
-        "explanation": "let has block scope while var has function scope",
-        "difficulty": "beginner",
-        "points": 10
-      }
+    "topics": [
+        {
+            "id": "2e3f26c3-8c6e-4850-93d1-d0934f02aa5d",
+            "name": "History"
+        },
+        {
+            "id": "a7f8da14-0419-479c-94f7-7a82cc2b8c48",
+            "name": "Programming"
+        }
     ]
-  },
-  "count": 1
 }
 ```
 
