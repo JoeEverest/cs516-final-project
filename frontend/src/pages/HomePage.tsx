@@ -3,10 +3,19 @@ import { useNavigate } from 'react-router';
 import TopicSelection from '../components/TopicSelection';
 import { Button } from '../components/ui/button';
 import { Topic } from '../model/user';
-import { topics } from '../data';
+import { useTopics } from '../api/queries';
 
 const HomePage: React.FC = () => {
     const navigate = useNavigate();
+
+    // Use React Query hook to fetch topics and append Math Sprint
+    const { data: apiTopics = [], isLoading } = useTopics();
+
+    // Append the Math Sprint topic to the fetched topics
+    const topics = [
+        ...apiTopics,
+        { id: "math", name: "Math Sprint" },
+    ];
 
     const handleTopicSelect = (topic: Topic) => {
         if (topic.id === 'math') {
@@ -28,10 +37,19 @@ const HomePage: React.FC = () => {
                 </Button>
             </div>
 
-            <TopicSelection
-                topics={topics}
-                onTopicSelect={handleTopicSelect}
-            />
+            {isLoading ? (
+                <div className="text-center py-8">
+                    <div className="flex items-center justify-center gap-2 text-gray-500">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                        <span>Loading topics...</span>
+                    </div>
+                </div>
+            ) : (
+                <TopicSelection
+                    topics={topics}
+                    onTopicSelect={handleTopicSelect}
+                />
+            )}
         </div>
     );
 };

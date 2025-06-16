@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { Button } from './ui/button';
 import { Trophy, Clock, Target, RotateCcw, Home, Save } from 'lucide-react';
 import { MathQuizResult } from './MathQuiz';
-import { addLeaderboardEntry, getCurrentUser } from '../data';
+import { useCreateLeaderboardEntry } from '../api/queries';
 
 interface MathScoreDisplayProps {
     result: MathQuizResult;
@@ -13,7 +13,31 @@ interface MathScoreDisplayProps {
 const MathScoreDisplay: React.FC<MathScoreDisplayProps> = ({ result, onRestart }) => {
     const navigate = useNavigate();
     const [isSaved, setIsSaved] = useState(false);
-    const [saving, setSaving] = useState(false);
+    const createLeaderboardEntry = useCreateLeaderboardEntry();
+
+    // Helper function to decode JWT and extract user info
+    const getUserFromToken = () => {
+        try {
+            const authData = localStorage.getItem("auth");
+            if (!authData) return null;
+
+            const { idToken } = JSON.parse(authData);
+            if (!idToken) return null;
+
+            // Decode JWT token (split and decode base64)
+            const payload = idToken.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payload));
+
+            return {
+                userId: decodedPayload.sub,
+                username: decodedPayload['cognito:username'],
+                email: decodedPayload.email
+            };
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    };
 
     const formatTime = (ms: number) => {
         const seconds = Math.floor(ms / 1000);
@@ -47,25 +71,27 @@ const MathScoreDisplay: React.FC<MathScoreDisplayProps> = ({ result, onRestart }
     };
 
     const handleSaveToLeaderboard = async () => {
-        if (isSaved) return;
+        if (isSaved || createLeaderboardEntry.isLoading) return;
 
-        setSaving(true);
+        const user = getUserFromToken();
+        if (!user) {
+            console.error('No user found in token');
+            return;
+        }
+
         try {
-            const currentUser = getCurrentUser();
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-
-            addLeaderboardEntry({
-                userId: currentUser.id,
+            await createLeaderboardEntry.mutateAsync({
+                userId: user.userId,
+                username: user.username,
                 topicId: 'math',
                 score: result.score,
+                totalQuestions: result.totalQuestions,
                 duration: result.duration
             });
 
             setIsSaved(true);
         } catch (error) {
             console.error('Failed to save to leaderboard:', error);
-        } finally {
-            setSaving(false);
         }
     };
 
@@ -147,11 +173,11 @@ const MathScoreDisplay: React.FC<MathScoreDisplayProps> = ({ result, onRestart }
                     {!isSaved && (
                         <Button
                             onClick={handleSaveToLeaderboard}
-                            disabled={saving}
+                            disabled={createLeaderboardEntry.isLoading}
                             className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white py-4 text-lg font-bold rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-200 border-0"
                         >
                             <Save className="w-5 h-5" />
-                            {saving ? 'Saving...' : 'Save to Leaderboard'}
+                            {createLeaderboardEntry.isLoading ? 'Saving...' : 'Save to Leaderboard'}
                         </Button>
                     )}
 

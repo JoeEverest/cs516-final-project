@@ -2,13 +2,30 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import { Trophy, Medal, Award, Clock, ArrowLeft, Filter } from 'lucide-react';
-import { leaderboard, users, topics } from '../data';
-import { Leaderboard, User, Topic } from '../model/user';
+import { Trophy, Medal, Award, Clock } from 'lucide-react';
+import { users } from '../data';
+import { User } from '../model/user';
+import { useLeaderboard, useTopics } from '../api/queries';
 
 const LeaderboardPage: React.FC = () => {
     const navigate = useNavigate();
     const [selectedTopicId, setSelectedTopicId] = useState<string>('all');
+
+    // Use React Query hooks for data fetching
+    const { data: topics = [], isLoading: topicsLoading } = useTopics();
+    const { data: leaderboardData = [], isLoading: leaderboardLoading } = useLeaderboard(
+        selectedTopicId === 'all' ? undefined : selectedTopicId
+    );
+
+    const isLoading = topicsLoading || leaderboardLoading;
+
+    // Sort leaderboard data: by score descending, then by duration ascending (faster is better)
+    const filteredLeaderboard = [...leaderboardData].sort((a, b) => {
+        if (a.score !== b.score) {
+            return b.score - a.score;
+        }
+        return (a.duration || 0) - (b.duration || 0);
+    });
 
     const getUserName = (userId: string): string => {
         const user = users.find((u: User) => u.id === userId);
@@ -16,7 +33,7 @@ const LeaderboardPage: React.FC = () => {
     };
 
     const getTopicName = (topicId: string): string => {
-        const topic = topics.find((t: Topic) => t.id === topicId);
+        const topic = topics.find((t) => t.id === topicId);
         return topic ? topic.name : 'Unknown Topic';
     };
 
@@ -38,24 +55,6 @@ const LeaderboardPage: React.FC = () => {
                 return <span className="w-8 h-8 flex items-center justify-center text-white font-bold text-lg bg-gradient-to-r from-purple-400 to-pink-500 rounded-full">{rank}</span>;
         }
     };
-
-    const getFilteredLeaderboard = (): Leaderboard[] => {
-        let filtered = [...leaderboard];
-
-        if (selectedTopicId !== 'all') {
-            filtered = filtered.filter(entry => entry.topicId === selectedTopicId);
-        }
-
-        // Sort by score descending, then by duration ascending (faster is better)
-        return filtered.sort((a, b) => {
-            if (a.score !== b.score) {
-                return b.score - a.score;
-            }
-            return a.duration - b.duration;
-        });
-    };
-
-    const filteredLeaderboard = getFilteredLeaderboard();
 
     return (
         <div className="space-y-6">
@@ -85,6 +84,7 @@ const LeaderboardPage: React.FC = () => {
                             variant={selectedTopicId === 'all' ? 'default' : 'outline'}
                             onClick={() => setSelectedTopicId('all')}
                             size="sm"
+                            disabled={topicsLoading}
                             className={`font-bold rounded-full transition-all duration-200 hover:scale-105 ${selectedTopicId === 'all'
                                 ? 'bg-gradient-to-r from-purple-400 to-pink-500 text-white'
                                 : 'bg-white border-purple-300 text-purple-600 hover:bg-purple-50'
@@ -92,24 +92,31 @@ const LeaderboardPage: React.FC = () => {
                         >
                             🌟 All Topics
                         </Button>
-                        {topics.map((topic) => (
-                            <Button
-                                key={topic.id}
-                                variant={selectedTopicId === topic.id ? 'default' : 'outline'}
-                                onClick={() => setSelectedTopicId(topic.id)}
-                                size="sm"
-                                className={`font-bold rounded-full transition-all duration-200 hover:scale-105 ${selectedTopicId === topic.id
-                                    ? 'bg-gradient-to-r from-purple-400 to-pink-500 text-white'
-                                    : 'bg-white border-purple-300 text-purple-600 hover:bg-purple-50'
-                                    }`}
-                            >
-                                {topic.name === 'English Vocabulary' && '📚'}
-                                {topic.name === 'Geography' && '🌍'}
-                                {topic.name === 'Science' && '🔬'}
-                                {topic.name === 'World History' && '📜'}
-                                {topic.name}
-                            </Button>
-                        ))}
+                        {topicsLoading ? (
+                            <div className="flex items-center gap-2 text-gray-500">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-purple-600"></div>
+                                <span className="text-sm">Loading topics...</span>
+                            </div>
+                        ) : (
+                            topics.map((topic) => (
+                                <Button
+                                    key={topic.id}
+                                    variant={selectedTopicId === topic.id ? 'default' : 'outline'}
+                                    onClick={() => setSelectedTopicId(topic.id)}
+                                    size="sm"
+                                    className={`font-bold rounded-full transition-all duration-200 hover:scale-105 ${selectedTopicId === topic.id
+                                        ? 'bg-gradient-to-r from-purple-400 to-pink-500 text-white'
+                                        : 'bg-white border-purple-300 text-purple-600 hover:bg-purple-50'
+                                        }`}
+                                >
+                                    {topic.name === 'English Vocabulary' && '📚'}
+                                    {topic.name === 'Geography' && '🌍'}
+                                    {topic.name === 'Science' && '🔬'}
+                                    {topic.name === 'World History' && '📜'}
+                                    {topic.name}
+                                </Button>
+                            ))
+                        )}
                     </div>
                 </CardContent>
             </Card>
@@ -125,7 +132,14 @@ const LeaderboardPage: React.FC = () => {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    {filteredLeaderboard.length === 0 ? (
+                    {isLoading ? (
+                        <div className="text-center py-8">
+                            <div className="flex items-center justify-center gap-2 text-gray-500">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                                <span>Loading leaderboard...</span>
+                            </div>
+                        </div>
+                    ) : filteredLeaderboard.length === 0 ? (
                         <div className="text-center py-8 text-gray-500">
                             No scores available for this topic yet.
                         </div>
@@ -169,7 +183,7 @@ const LeaderboardPage: React.FC = () => {
                                                 <Clock className="w-4 h-4 text-gray-400" />
                                                 <div>
                                                     <div className="font-medium text-gray-700">
-                                                        {formatDuration(entry.duration)}
+                                                        {formatDuration(entry.duration || 0)}
                                                     </div>
                                                     <div className="text-xs text-gray-500">Time</div>
                                                 </div>

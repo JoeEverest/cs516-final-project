@@ -25,17 +25,20 @@ backend/
 ## Local Development
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm
 
 ### Setup
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start development server:
+
 ```bash
 npm run dev
 ```
@@ -51,57 +54,55 @@ The server will start on `http://localhost:3000`
 
 ## API Endpoints
 
-### GET /topics
-Returns all available quiz topics.
+### GET /questions
+
+eg: https://28dnbgw3mk.execute-api.us-east-1.amazonaws.com/dev/questions/:topicId
+topicId: eccca8bf-9e47-4409-b77e-94f149afb607
+Returns all available questions of that topic.
 
 **Response:**
+
 ```json
 {
-  "success": true,
-  "data": [
+  "questions": [
     {
-      "id": "1",
-      "name": "JavaScript Fundamentals",
-      "description": "Basic JavaScript concepts and syntax",
-      "questionCount": 10,
-      "difficulty": "beginner",
-      "createdAt": "2024-01-01T00:00:00Z"
+      "id": "3baef9ff-9b05-47c6-ac6b-b2028f1d784a",
+      "topicId": "9f4cdfed-f317-4986-bbf7-11b3adbb271e",
+      "question": "How many holes are there in a standard round of golf?",
+      "answers": ["18", "9", "12", "16"],
+      "correctAnswer": "18"
     }
-  ],
-  "count": 1
+  ]
 }
 ```
 
-### GET /topics/:id
-Returns questions for a specific topic.
+### GET /topics
 
+Returns all available quiz topics.
+eg: https://28dnbgw3mk.execute-api.us-east-1.amazonaws.com/dev/topics
 **Response:**
+
 ```json
 {
-  "success": true,
-  "data": {
-    "topicId": "1",
-    "questions": [
-      {
-        "id": "1",
-        "topicId": "1",
-        "question": "What is the difference between let and var in JavaScript?",
-        "options": ["No difference", "let has block scope, var has function scope", "..."],
-        "correctAnswer": 1,
-        "explanation": "let has block scope while var has function scope",
-        "difficulty": "beginner",
-        "points": 10
-      }
-    ]
-  },
-  "count": 1
+  "topics": [
+    {
+      "id": "2e3f26c3-8c6e-4850-93d1-d0934f02aa5d",
+      "name": "History"
+    },
+    {
+      "id": "a7f8da14-0419-479c-94f7-7a82cc2b8c48",
+      "name": "Programming"
+    }
+  ]
 }
 ```
 
 ### POST /topics
+
 Create a new topic.
 
 **Request Body:**
+
 ```json
 {
   "name": "New Topic",
@@ -111,9 +112,11 @@ Create a new topic.
 ```
 
 ### POST /leaderboard
+
 Submit a user's quiz score.
 
 **Request Body:**
+
 ```json
 {
   "userId": "user123",
@@ -127,10 +130,12 @@ Submit a user's quiz score.
 ## AWS Lambda Deployment
 
 ### Prerequisites
+
 - AWS CLI configured with appropriate permissions
 - Serverless Framework installed globally: `npm install -g serverless`
 
 ### Environment Variables
+
 Set these environment variables in AWS Lambda or locally for testing:
 
 - `MONGODB_URI` - MongoDB connection string
@@ -139,22 +144,27 @@ Set these environment variables in AWS Lambda or locally for testing:
 ### Deploy to AWS
 
 1. Build the project:
+
 ```bash
 npm run build
 ```
 
 2. Deploy using Serverless Framework:
+
 ```bash
 serverless deploy
 ```
 
 Or use the combined command:
+
 ```bash
 npm run deploy
 ```
 
 ### Local Lambda Testing
+
 You can test the Lambda function locally using:
+
 ```bash
 serverless offline
 ```
@@ -204,11 +214,13 @@ curl -X POST https://your-api-gateway-url/leaderboard \
 ## Error Handling
 
 The API includes comprehensive error handling:
+
 - 400 Bad Request for invalid input
 - 404 Not Found for non-existent resources
 - 500 Internal Server Error for server issues
 
 All error responses follow this format:
+
 ```json
 {
   "success": false,

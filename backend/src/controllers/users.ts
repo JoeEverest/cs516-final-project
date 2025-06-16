@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import { ScanCommand } from "@aws-sdk/client-dynamodb";
 import { dynamoDB } from "../../dynamoClient";

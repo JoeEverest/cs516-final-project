@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import serverless from "serverless-http";
 import { questionRoutes } from "./src/routes/questions";
 import { topicRoutes } from "./src/routes/topics";
-import leaderboardRoutes from './src/routes/leaderboard';
-
+import leaderboardRoutes from "./src/routes/leaderboard";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   );
 
   if (req.method === "OPTIONS") {
@@ -28,14 +28,13 @@ app.use((req, res, next) => {
   }
 });
 
-
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "okay" });
 });
 
 app.use("/questions", questionRoutes);
 app.use("/topics", topicRoutes);
-app.use("/leaderboard", leaderboardRoutes);  // Fixed variable name
+app.use("/leaderboard", leaderboardRoutes); // Fixed variable name
 
 // Health check route
 app.get("/health", (req: Request, res: Response) => {
@@ -51,7 +50,7 @@ app.use("*", (req: Request, res: Response) => {
 });
 
 // Error handling middleware
-app.use((error: any, req: Request, res: Response, next: any) => {
+app.use((error: any, req: Request, res: Response) => {
   console.error("Unhandled error:", error);
   res.status(500).json({
     success: false,

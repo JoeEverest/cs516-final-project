@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { TrophyIcon, ClockIcon, UserIcon, ArrowLeftIcon } from 'lucide-react';
-import { getLeaderboard, getLeaderboardByTopic, topics, users } from '@/data';
+import { useLeaderboard, useTopics } from '@/api/queries';
+import { users } from '@/data';
 
 interface LeaderboardProps {
     onBack: () => void;
@@ -11,8 +12,11 @@ interface LeaderboardProps {
 const Leaderboard: React.FC<LeaderboardProps> = ({ onBack }) => {
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 
-    const allLeaderboard = getLeaderboard();
-    const topicLeaderboard = selectedTopic ? getLeaderboardByTopic(selectedTopic) : allLeaderboard;
+    // Use React Query hooks for data fetching
+    const { data: topics = [], isLoading: topicsLoading } = useTopics();
+    const { data: topicLeaderboard = [], isLoading: leaderboardLoading } = useLeaderboard(selectedTopic || undefined);
+
+    const isLoading = topicsLoading || leaderboardLoading;
 
     const formatTime = (ms: number) => {
         const seconds = Math.floor(ms / 1000);
@@ -84,7 +88,14 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ onBack }) => {
 
             {/* Leaderboard Entries */}
             <div className="space-y-3">
-                {topicLeaderboard.length === 0 ? (
+                {isLoading ? (
+                    <div className="text-center py-8">
+                        <div className="flex items-center justify-center gap-2 text-gray-500">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                            <span>Loading leaderboard...</span>
+                        </div>
+                    </div>
+                ) : topicLeaderboard.length === 0 ? (
                     <div className="text-center py-8 text-gray-500">
                         <TrophyIcon className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                         <p>No scores yet for this topic.</p>
@@ -128,7 +139,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ onBack }) => {
                                         <div className="flex items-center gap-1 text-yellow-600">
                                             <ClockIcon className="w-4 h-4" />
                                             <span className="font-semibold">
-                                                {formatTime(entry.duration)}
+                                                {formatTime(entry.duration || 0)}
                                             </span>
                                         </div>
                                         <div className="text-sm text-gray-500">Time</div>
@@ -165,7 +176,7 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ onBack }) => {
                         </div>
                         <div>
                             <div className="text-2xl font-bold text-purple-600">
-                                {formatTime(Math.min(...topicLeaderboard.map(entry => entry.duration)))}
+                                {formatTime(Math.min(...topicLeaderboard.map(entry => entry.duration || 0)))}
                             </div>
                             <div className="text-sm text-gray-600">Best Time</div>
                         </div>
