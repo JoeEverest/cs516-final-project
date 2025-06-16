@@ -3,12 +3,13 @@ service: quiz-app-backend
 provider:
   name: aws
   runtime: nodejs20.x
-  region: us-east-1
+  region: us-east-2
   stage: ${opt:stage, 'dev'}
   memorySize: 256
   timeout: 30
   environment:
     NODE_ENV: production
+    MONGODB_URI: ${env:MONGODB_URI, ''}
     JWT_SECRET: ${env:JWT_SECRET, '2Ekum8Jhei8eTbM0XAx8zJdEdkJ5g'}
 
 functions:
@@ -24,7 +25,23 @@ functions:
           path: /
           method: any
           cors: true
-
+  populateQuestion:
+    handler: populate/index.handler
+    role: LambdaExecutionRole
+    package:
+      individually: true
+      patterns:
+        - populate/**
+        - '!node_modules/**'
+        - '!dist/**'
+        - '!tsconfig.json'
+        - '!.env'
+        - '!deploy.sh'
+        - '!README.md'
+        - '!yarn.lock'
+        - '!package.json'
+        - '!package-lock.json'
+        - '!eslint.config.mjs'
 plugins:
   - serverless-offline
 
@@ -35,12 +52,12 @@ custom:
 
 package:
   patterns:
-    - "!node_modules/**"
-    - "!src/**"
-    - "!*.ts"
-    - "!tsconfig.json"
-    - "dist/**"
-    - "node_modules/**"
+    - '!node_modules/**'
+    - '!src/**'
+    - '!*.ts'
+    - '!tsconfig.json'
+    - 'dist/**'
+    - 'node_modules/**'
   individually: false
 
 resources:
