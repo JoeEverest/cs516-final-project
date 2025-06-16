@@ -1,4 +1,4 @@
-export const questionBank = [
+const questionBank = [
   {
     topicId: "History",
     question: "Who was the first President of the United States?",
@@ -1592,3 +1592,5 @@ export const questionBank = [
     correctAnswer: "A function calling itself",
   },
 ];
+
+module.exports = { questionBank };

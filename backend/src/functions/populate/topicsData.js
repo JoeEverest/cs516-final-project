@@ -1,4 +1,4 @@
-export const topicsData = [
+const topicsData = [
   "Mathematics",
   "AWS",
   "Programming",
@@ -6,3 +6,5 @@ export const topicsData = [
   "Geography",
   "Sports",
 ];
+
+module.exports = { topicsData };
