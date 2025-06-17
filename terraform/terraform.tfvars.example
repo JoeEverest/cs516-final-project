@@ -1,0 +1,27 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and customize the values
+
+# AWS Configuration
+aws_region = "us-east-1"
+
+# Project Configuration
+project_name = "mind-sprinter"
+
+# API Configuration - Update this with your actual backend API URL
+api_base_url = "https://your-api-gateway-url.execute-api.us-east-1.amazonaws.com/dev"
+
+# CloudFront Configuration
+cloudfront_price_class = "PriceClass_100"  # US, Canada, Europe, & Israel
+
+# Custom Domain Configuration (optional)
+use_custom_domain = false
+# domain_name = "your-domain.com"
+# ssl_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/your-cert-id"
+
+# Tags
+tags = {
+  Project     = "mind-sprinter"
+  Environment = "production"
+  ManagedBy   = "terraform"
+  Owner       = "your-name"
+}
